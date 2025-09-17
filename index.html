@@ -89,6 +89,74 @@
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
 
+        .search-section {
+            margin: 2rem 0;
+            padding: 2rem;
+            background: rgba(20, 20, 40, 0.6);
+            border-radius: 20px;
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .search-title {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        .search-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 50px 0 0 50px;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-right: none;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+        }
+
+        .search-input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-button {
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 0 50px 50px 0;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: none;
+        }
+
+        .search-button:hover {
+            background: linear-gradient(45deg, #ff5252, #ff7b7b);
+            transform: scale(1.05);
+        }
+
         .subject-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -219,6 +287,101 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
+        /* Popup Styling */
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .popup-content {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            border-radius: 20px;
+            padding: 3rem;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.5s ease;
+            box-shadow: 0 0 50px rgba(101, 78, 163, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .popup.active .popup-content {
+            transform: scale(1);
+        }
+
+        .popup-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .popup-close:hover {
+            color: #ff6b6b;
+        }
+
+        .popup-icon {
+            font-size: 4rem;
+            color: #4ecdc4;
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        .popup-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .popup-message {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .popup-button {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            color: white;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .popup-button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+        }
+
         @keyframes float {
             0%, 100% { transform: translateY(0); }
             50% { transform: translateY(-15px); }
@@ -233,6 +396,11 @@
         @keyframes glowPulse {
             0%, 100% { opacity: 0.3; }
             50% { opacity: 0.6; }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
         }
 
         .floating-icons {
@@ -266,6 +434,13 @@
             .subject-grid { grid-template-columns: 1fr; }
             .subject-icon { font-size: 3rem; }
             .subject-title { font-size: 1.8rem; }
+            .search-box { flex-direction: column; }
+            .search-input { 
+                border-radius: 50px; 
+                margin-bottom: 1rem;
+                border-right: 1px solid rgba(255, 255, 255, 0.2);
+            }
+            .search-button { border-radius: 50px; }
         }
     </style>
 </head>
@@ -278,6 +453,16 @@
         <div class="logo">
             <h1>Posn SUT 68</h1>
             <p>ประกาศรายชื่อผู้มีสิทธิ์เข้าค่ายโอลิมปิกวิชาการ</p>
+        </div>
+
+        <div class="search-section">
+            <h2 class="search-title">ตรวจสอบผลการคัดเลือก</h2>
+            <div class="search-box">
+                <input type="text" class="search-input" id="idCardInput" placeholder="กรอกเลขบัตรประชาชน 13 หลัก" maxlength="13">
+                <button class="search-button" id="searchButton">
+                    <i class="fas fa-search"></i> ค้นหา
+                </button>
+            </div>
         </div>
         
         <div class="subject-grid">
@@ -343,7 +528,22 @@
         </div>
         
         <div class="footer">
-            <p>© 2025 Project Sindex - Ui by nongkaow</p>
+            <p>© 2023 Posn SUT 68 - สถาบันเทคโนโลยีสุรนารี</p>
+        </div>
+    </div>
+
+    <!-- Popup -->
+    <div class="popup" id="resultPopup">
+        <div class="popup-content">
+            <button class="popup-close" id="closePopup">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="popup-icon">
+                <i class="fas fa-trophy"></i>
+            </div>
+            <h2 class="popup-title">ยินดีด้วย!</h2>
+            <p class="popup-message" id="popupMessage">คุณผ่านการคัดเลือกเข้าสอวนค่าย 1</p>
+            <button class="popup-button" id="closePopupButton">ตกลง</button>
         </div>
     </div>
 
@@ -452,6 +652,43 @@
             // Add glow pulse animation
             const glow = document.querySelector('.glow');
             glow.style.animation = 'glowPulse 8s infinite ease-in-out';
+            
+            // Search functionality
+            const searchButton = document.getElementById('searchButton');
+            const idCardInput = document.getElementById('idCardInput');
+            const popup = document.getElementById('resultPopup');
+            const closePopup = document.getElementById('closePopup');
+            const closePopupButton = document.getElementById('closePopupButton');
+            const popupMessage = document.getElementById('popupMessage');
+            
+            searchButton.addEventListener('click', function() {
+                const idCard = idCardInput.value.trim();
+                
+                if (idCard.length !== 13 || isNaN(idCard)) {
+                    alert('กรุณากรอกเลขบัตรประชาชน 13 หลักให้ถูกต้อง');
+                    return;
+                }
+                
+                // Show success popup
+                popupMessage.textContent = `ยินดีด้วย! คุณผ่านการคัดเลือกเข้าสอวนค่าย 1`;
+                popup.classList.add('active');
+            });
+            
+            // Close popup
+            closePopup.addEventListener('click', function() {
+                popup.classList.remove('active');
+            });
+            
+            closePopupButton.addEventListener('click', function() {
+                popup.classList.remove('active');
+            });
+            
+            // Allow Enter key to trigger search
+            idCardInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    searchButton.click();
+                }
+            });
         });
     </script>
 </body>
