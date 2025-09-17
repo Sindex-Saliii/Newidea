@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Posn SUT 68 - ประกาศรายชื่อ</title>
-    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -15,7 +15,7 @@
         }
 
         body {
-            background-color: #000;
+            background: linear-gradient(135deg, #0c0c1e 0%, #1a1a2e 50%, #16213e 100%);
             color: #fff;
             min-height: 100vh;
             overflow-x: hidden;
@@ -34,8 +34,21 @@
         .particle {
             position: absolute;
             border-radius: 50%;
-            background: radial-gradient(circle, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0) 70%);
-            opacity: 0.3;
+            opacity: 0.5;
+            animation: floatParticle 15s infinite linear;
+        }
+
+        .glow {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(101, 78, 163, 0.2) 0%, rgba(12, 12, 30, 0) 70%);
+            border-radius: 50%;
+            z-index: -2;
+            filter: blur(50px);
         }
 
         .container {
@@ -48,77 +61,128 @@
         }
 
         .logo {
-            margin-bottom: 2rem;
+            margin-bottom: 3rem;
             animation: float 6s ease-in-out infinite;
+            position: relative;
+            padding: 2rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
         }
 
         .logo h1 {
-            font-size: 4rem;
+            font-size: 4.5rem;
             background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #ffbe0b, #fb5607, #8338ec);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
+            text-shadow: 0 0 30px rgba(255, 255, 255, 0.3);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
         }
 
         .logo p {
             font-size: 1.5rem;
             color: #e0e0e0;
             margin-top: 0.5rem;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
 
         .subject-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2.5rem;
             margin-top: 3rem;
         }
 
         .subject-card {
-            background: rgba(30, 30, 30, 0.7);
-            border-radius: 15px;
-            padding: 1.5rem;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            backdrop-filter: blur(10px);
+            background: rgba(20, 20, 40, 0.6);
+            border-radius: 20px;
+            padding: 2rem;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -1;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #ffbe0b, #fb5607, #8338ec);
+            border-radius: 22px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
         }
 
         .subject-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .subject-card:hover::before {
+            opacity: 0.3;
         }
 
         .subject-icon {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+            font-size: 4rem;
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .subject-card:hover .subject-icon {
+            transform: scale(1.2) rotate(5deg);
         }
 
         .subject-title {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
         }
 
         .download-btn {
-            display: inline-block;
-            padding: 0.8rem 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 2rem;
             border-radius: 50px;
             text-decoration: none;
             color: white;
             font-weight: bold;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
             border: none;
             cursor: pointer;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+            font-size: 1.1rem;
         }
 
         .download-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            transform: scale(1.08);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            letter-spacing: 1px;
         }
 
         .download-btn:active {
             transform: scale(0.95);
+        }
+
+        .download-btn i {
+            margin-right: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .download-btn:hover i {
+            transform: translateY(-3px);
         }
 
         .download-btn::before {
@@ -145,9 +209,14 @@
         .compsci { background: linear-gradient(45deg, #fb5607, #ff8a5b); }
 
         .footer {
-            margin-top: 4rem;
+            margin-top: 5rem;
             color: #aaa;
             font-size: 0.9rem;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         @keyframes float {
@@ -155,15 +224,55 @@
             50% { transform: translateY(-15px); }
         }
 
+        @keyframes floatParticle {
+            0% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+            100% { transform: translateY(0) rotate(360deg); }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+
+        .floating-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-icon {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.1;
+            animation: floatIcon 20s infinite linear;
+        }
+
+        @keyframes floatIcon {
+            0% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(100px, 200px) rotate(90deg); }
+            50% { transform: translate(200px, 400px) rotate(180deg); }
+            75% { transform: translate(-100px, 300px) rotate(270deg); }
+            100% { transform: translate(0, 0) rotate(360deg); }
+        }
+
         @media (max-width: 768px) {
-            .logo h1 { font-size: 2.5rem; }
+            .logo h1 { font-size: 3rem; }
             .logo p { font-size: 1.2rem; }
             .subject-grid { grid-template-columns: 1fr; }
+            .subject-icon { font-size: 3rem; }
+            .subject-title { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
     <div class="particles" id="particles"></div>
+    <div class="glow"></div>
+    <div class="floating-icons" id="floating-icons"></div>
     
     <div class="container">
         <div class="logo">
@@ -173,7 +282,7 @@
         
         <div class="subject-grid">
             <div class="subject-card">
-                <div class="subject-icon">
+                <div class="subject-icon" style="color: #ff6b6b;">
                     <i class="fas fa-calculator"></i>
                 </div>
                 <h2 class="subject-title">คณิตศาสตร์</h2>
@@ -183,7 +292,7 @@
             </div>
             
             <div class="subject-card">
-                <div class="subject-icon">
+                <div class="subject-icon" style="color: #4ecdc4;">
                     <i class="fas fa-flask"></i>
                 </div>
                 <h2 class="subject-title">เคมี</h2>
@@ -193,7 +302,7 @@
             </div>
             
             <div class="subject-card">
-                <div class="subject-icon">
+                <div class="subject-icon" style="color: #45b7d1;">
                     <i class="fas fa-dna"></i>
                 </div>
                 <h2 class="subject-title">ชีววิทยา</h2>
@@ -203,7 +312,7 @@
             </div>
             
             <div class="subject-card">
-                <div class="subject-icon">
+                <div class="subject-icon" style="color: #ffbe0b;">
                     <i class="fas fa-atom"></i>
                 </div>
                 <h2 class="subject-title">ฟิสิกส์</h2>
@@ -213,7 +322,7 @@
             </div>
             
             <div class="subject-card">
-                <div class="subject-icon">
+                <div class="subject-icon" style="color: #8338ec;">
                     <i class="fas fa-moon"></i>
                 </div>
                 <h2 class="subject-title">ดาราศาสตร์</h2>
@@ -223,7 +332,7 @@
             </div>
             
             <div class="subject-card">
-                <div class="subject-icon">
+                <div class="subject-icon" style="color: #fb5607;">
                     <i class="fas fa-laptop-code"></i>
                 </div>
                 <h2 class="subject-title">คอมพิวเตอร์</h2>
@@ -234,7 +343,7 @@
         </div>
         
         <div class="footer">
-            <p>© 2025 Project Sindex - Ui by nongkaow</p>
+            <p>© 2023 Posn SUT 68 - สถาบันเทคโนโลยีสุรนารี</p>
         </div>
     </div>
 
@@ -242,20 +351,56 @@
         // Create floating particles effect
         document.addEventListener('DOMContentLoaded', function() {
             const particlesContainer = document.getElementById('particles');
-            const particleCount = 50;
+            const floatingIconsContainer = document.getElementById('floating-icons');
+            const particleCount = 80;
+            const iconCount = 15;
+            const icons = ['fa-calculator', 'fa-flask', 'fa-dna', 'fa-atom', 'fa-moon', 'fa-laptop-code'];
             
+            // Create particles
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.classList.add('particle');
                 
-                const size = Math.random() * 100 + 10;
+                const size = Math.random() * 120 + 10;
                 particle.style.width = `${size}px`;
                 particle.style.height = `${size}px`;
+                
+                const colors = [
+                    'rgba(255, 107, 107, 0.3)',
+                    'rgba(78, 205, 196, 0.3)',
+                    'rgba(69, 183, 209, 0.3)',
+                    'rgba(255, 190, 11, 0.3)',
+                    'rgba(251, 86, 7, 0.3)',
+                    'rgba(131, 56, 236, 0.3)'
+                ];
+                
+                const randomColor = colors[Math.floor(Math.random() * colors.length)];
+                particle.style.background = `radial-gradient(circle, ${randomColor} 0%, rgba(255,255,255,0) 70%)`;
                 
                 particle.style.left = `${Math.random() * 100}vw`;
                 particle.style.top = `${Math.random() * 100}vh`;
                 
+                particle.style.animationDuration = `${15 + Math.random() * 20}s`;
+                particle.style.animationDelay = `-${Math.random() * 20}s`;
+                
                 particlesContainer.appendChild(particle);
+            }
+            
+            // Create floating icons
+            for (let i = 0; i < iconCount; i++) {
+                const icon = document.createElement('i');
+                const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+                icon.classList.add('fas', randomIcon, 'floating-icon');
+                
+                icon.style.left = `${Math.random() * 100}vw`;
+                icon.style.top = `${Math.random() * 100}vh`;
+                icon.style.animationDuration = `${20 + Math.random() * 30}s`;
+                icon.style.animationDelay = `-${Math.random() * 30}s`;
+                
+                const colors = ['#ff6b6b', '#4ecdc4', '#45b7d1', '#ffbe0b', '#fb5607', '#8338ec'];
+                icon.style.color = colors[Math.floor(Math.random() * colors.length)];
+                
+                floatingIconsContainer.appendChild(icon);
             }
             
             // Mouse move effect for particles
@@ -265,11 +410,16 @@
                 const mouseY = e.clientY / window.innerHeight;
                 
                 particles.forEach(particle => {
-                    const speedX = (Math.random() - 0.5) * 10;
-                    const speedY = (Math.random() - 0.5) * 10;
+                    const speedX = (Math.random() - 0.5) * 15;
+                    const speedY = (Math.random() - 0.5) * 15;
                     
                     particle.style.transform = `translate(${speedX * mouseX}px, ${speedY * mouseY}px)`;
                 });
+                
+                // Move glow effect with mouse
+                const glow = document.querySelector('.glow');
+                glow.style.left = `${e.clientX}px`;
+                glow.style.top = `${e.clientY}px`;
             });
             
             // Animate particles
@@ -281,8 +431,8 @@
                     let y = parseFloat(particle.style.top || 0);
                     
                     // Move particles slowly
-                    x += (Math.random() - 0.5) * 0.5;
-                    y += (Math.random() - 0.5) * 0.5;
+                    x += (Math.random() - 0.5) * 0.3;
+                    y += (Math.random() - 0.5) * 0.3;
                     
                     // Keep particles in viewport
                     if (x < 0) x = 100;
@@ -298,6 +448,10 @@
             }
             
             animateParticles();
+            
+            // Add glow pulse animation
+            const glow = document.querySelector('.glow');
+            glow.style.animation = 'glowPulse 8s infinite ease-in-out';
         });
     </script>
 </body>
